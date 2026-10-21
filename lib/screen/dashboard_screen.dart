@@ -6,10 +6,10 @@ import 'presensi_screen.dart';
 import 'riwayat_screen.dart';
 import 'rekap_screen.dart';
 
-const Color burgundy = Color(0xFF701A32);
-const Color blush = Color(0xFFF6E3E8);
-const Color softBackground = Color(0xFFFFF7F8);
-const Color mutedText = Color(0xFF806772);
+const burgundy = Color(0xFF701A32);
+const blush = Color(0xFFEBC5CF);
+const softBackground = Color(0xFFFFF7F8);
+const mutedText = Color(0xFF94747D);
 
 class DashboardPage extends StatelessWidget {
   const DashboardPage({super.key});
@@ -29,453 +29,278 @@ class DashboardPage extends StatelessWidget {
         backgroundColor: softBackground,
         foregroundColor: burgundy,
         elevation: 0,
-        titleSpacing: 20,
         title: const Row(
           children: [
-            Icon(Icons.school_rounded, size: 29),
+            CircleAvatar(
+              backgroundColor: burgundy,
+              child: Icon(Icons.school, color: Colors.white),
+            ),
             SizedBox(width: 10),
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(
-                  'PresensiKu',
-                  style: TextStyle(
-                    fontSize: 21,
-                    fontWeight: FontWeight.w800,
-                  ),
-                ),
-                Text(
-                  'SISTEM PRESENSI SISWA',
-                  style: TextStyle(
-                    fontSize: 9,
-                    letterSpacing: 1.2,
-                    color: mutedText,
-                  ),
-                ),
+                Text('PresensiKu',
+                    style: TextStyle(
+                      fontSize: 16,
+                      fontWeight: FontWeight.bold,
+                    )),
+                Text('Sistem Presensi Siswa',
+                    style: TextStyle(fontSize: 11, color: mutedText)),
               ],
             ),
           ],
         ),
         actions: [
           IconButton(
-            tooltip: 'Keluar',
-            onPressed: () {
-              Navigator.pushReplacementNamed(context, '/login');
-            },
-            icon: const Icon(Icons.logout_rounded),
+            onPressed: () =>
+                Navigator.pushReplacementNamed(context, '/login'),
+            icon: const Icon(Icons.notifications_none),
           ),
-          const SizedBox(width: 8),
         ],
       ),
-      body: SingleChildScrollView(
-        padding: const EdgeInsets.fromLTRB(18, 12, 18, 28),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            _banner(),
-            const SizedBox(height: 25),
-
-            const Text(
-              'Ringkasan Sekolah',
-              style: TextStyle(
-                fontSize: 19,
-                fontWeight: FontWeight.w800,
-                color: Color(0xFF35232A),
-              ),
-            ),
-            const SizedBox(height: 5),
-            const Text(
-              'Informasi umum PresensiKu',
-              style: TextStyle(color: mutedText, fontSize: 13),
-            ),
-            const SizedBox(height: 14),
-
-            Row(
-              children: [
-                Expanded(
-                  child: _statistik(
-                    Icons.meeting_room_rounded,
-                    '6',
-                    'Total Kelas',
-                    burgundy,
-                  ),
+      body: SafeArea(
+        child: SingleChildScrollView(
+          padding: const EdgeInsets.fromLTRB(14, 4, 14, 18),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Container(
+                width: double.infinity,
+                padding: const EdgeInsets.all(14),
+                decoration: BoxDecoration(
+                  color: burgundy,
+                  borderRadius: BorderRadius.circular(15),
                 ),
-                const SizedBox(width: 12),
-                Expanded(
-                  child: _statistik(
-                    Icons.groups_rounded,
-                    '192',
-                    'Total Siswa',
-                    const Color(0xFF9F3450),
-                  ),
-                ),
-              ],
-            ),
-
-            const SizedBox(height: 12),
-            _kartuPresensi(),
-
-            const SizedBox(height: 27),
-            const Text(
-              'Menu Utama',
-              style: TextStyle(
-                fontSize: 19,
-                fontWeight: FontWeight.w800,
-                color: Color(0xFF35232A),
-              ),
-            ),
-            const SizedBox(height: 5),
-            const Text(
-              'Pilih layanan yang ingin kamu buka',
-              style: TextStyle(color: mutedText, fontSize: 13),
-            ),
-            const SizedBox(height: 14),
-
-            GridView.count(
-              crossAxisCount: 2,
-              crossAxisSpacing: 12,
-              mainAxisSpacing: 12,
-              childAspectRatio: 1.25,
-              shrinkWrap: true,
-              physics: const NeverScrollableScrollPhysics(),
-              children: [
-                _menu(
-                  context,
-                  Icons.meeting_room_rounded,
-                  'Data Kelas',
-                  'Kelola kelas siswa',
-                  burgundy,
-                  const KelasPage(),
-                ),
-                _menu(
-                  context,
-                  Icons.groups_rounded,
-                  'Data Siswa',
-                  'Daftar siswa',
-                  const Color(0xFF9F3450),
-                  const SiswaPage(),
-                ),
-                _menu(
-                  context,
-                  Icons.fact_check_rounded,
-                  'Presensi',
-                  'Catat kehadiran',
-                  const Color(0xFF52796F),
-                  const PresensiPage(),
-                ),
-                _menu(
-                  context,
-                  Icons.history_rounded,
-                  'Riwayat',
-                  'Lihat catatan presensi',
-                  const Color(0xFF8267A8),
-                  const RiwayatPage(),
-                ),
-                _menu(
-                  context,
-                  Icons.bar_chart_rounded,
-                  'Rekap Presensi',
-                  'Ringkasan kehadiran',
-                  const Color(0xFFB77932),
-                  const RekapPage(),
-                ),
-              ],
-            ),
-
-            const SizedBox(height: 22),
-            Container(
-              padding: const EdgeInsets.all(15),
-              decoration: BoxDecoration(
-                color: Colors.white,
-                borderRadius: BorderRadius.circular(18),
-                border: Border.all(color: const Color(0xFFEED9DF)),
-              ),
-              child: const Row(
-                children: [
-                  Icon(
-                    Icons.lightbulb_outline_rounded,
-                    color: burgundy,
-                    size: 25,
-                  ),
-                  SizedBox(width: 12),
-                  Expanded(
-                    child: Text(
-                      'Pastikan data presensi dicatat dengan teliti agar rekap kehadiran tetap akurat.',
-                      style: TextStyle(
-                        color: mutedText,
-                        fontSize: 12,
-                        height: 1.5,
-                      ),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    const Text('SELAMAT DATANG 👋',
+                        style: TextStyle(
+                            color: Colors.white70, fontSize: 10)),
+                    const SizedBox(height: 9),
+                    const Text('Halo, Guru!',
+                        style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 17,
+                            fontWeight: FontWeight.bold)),
+                    const SizedBox(height: 8),
+                    const Text(
+                      'Pantau kehadiran siswa dengan lebih mudah.',
+                      style: TextStyle(color: Colors.white, fontSize: 11),
                     ),
+                    const SizedBox(height: 14),
+                    Row(
+                      children: [
+                        Expanded(
+                          child: _bannerMenu(
+                            Icons.fact_check_outlined,
+                            'Presensi Hari Ini',
+                            () => buka(context, const PresensiPage()),
+                          ),
+                        ),
+                        const SizedBox(width: 7),
+                        Expanded(
+                          child: _bannerMenu(
+                            Icons.people_outline,
+                            'Data Siswa',
+                            () => buka(context, const SiswaPage()),
+                            pink: true,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
+              ),
+              const SizedBox(height: 10),
+              Row(
+                children: [
+                  Expanded(child: _statistik(Icons.apartment, '6', 'Total Kelas')),
+                  const SizedBox(width: 8),
+                  Expanded(child: _statistik(Icons.people_outline, '192', 'Total Siswa')),
+                ],
+              ),
+              const SizedBox(height: 13),
+              const Text('Akses Cepat',
+                  style: TextStyle(
+                      color: burgundy,
+                      fontWeight: FontWeight.bold,
+                      fontSize: 14)),
+              const SizedBox(height: 10),
+              Row(
+                children: [
+                  Expanded(
+                    child: _akses(Icons.assignment_turned_in_outlined,
+                        'Presensi', () => buka(context, const PresensiPage())),
+                  ),
+                  const SizedBox(width: 7),
+                  Expanded(
+                    child: _akses(Icons.history, 'Riwayat',
+                        () => buka(context, const RiwayatPage())),
+                  ),
+                  const SizedBox(width: 7),
+                  Expanded(
+                    child: _akses(Icons.bar_chart, 'Rekap',
+                        () => buka(context, const RekapPage())),
                   ),
                 ],
               ),
-            ),
+              const SizedBox(height: 10),
+              Container(
+                width: double.infinity,
+                padding: const EdgeInsets.all(14),
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  border: Border.all(color: blush),
+                  borderRadius: BorderRadius.circular(15),
+                ),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    const Text('Ringkasan Kehadiran',
+                        style: TextStyle(
+                            color: burgundy, fontWeight: FontWeight.bold)),
+                    const SizedBox(height: 12),
+                    const Row(
+                      children: [
+                        Icon(Icons.check_circle,
+                            color: Color(0xFF39865E)),
+                        SizedBox(width: 8),
+                        Expanded(child: Text('Hadir')),
+                        Text('85%',
+                            style: TextStyle(
+                                color: Color(0xFF39865E),
+                                fontWeight: FontWeight.bold)),
+                      ],
+                    ),
+                    const SizedBox(height: 8),
+                    ClipRRect(
+                      borderRadius: BorderRadius.circular(10),
+                      child: const LinearProgressIndicator(
+                        value: 0.85,
+                        minHeight: 6,
+                        backgroundColor: Color(0xFFE8E3E4),
+                        color: Color(0xFF39865E),
+                      ),
+                    ),
+                    const SizedBox(height: 7),
+                    const Text(
+                      'Ilustrasi desain — data kehadiran belum terhubung.',
+                      style: TextStyle(fontSize: 10, color: mutedText),
+                    ),
+                  ],
+                ),
+              ),
+              const SizedBox(height: 10),
+              Container(
+                padding: const EdgeInsets.symmetric(vertical: 12),
+                decoration: BoxDecoration(
+                  color: burgundy,
+                  borderRadius: BorderRadius.circular(14),
+                ),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  children: [
+                    _nav(Icons.home_outlined, 'Beranda'),
+                    _nav(Icons.apartment, 'Kelas',
+                        () => buka(context, const KelasPage())),
+                    _nav(Icons.fact_check_outlined, 'Presensi',
+                        () => buka(context, const PresensiPage())),
+                    _nav(Icons.bar_chart, 'Rekap',
+                        () => buka(context, const RekapPage())),
+                  ],
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget _bannerMenu(IconData icon, String teks, VoidCallback aksi,
+      {bool pink = false}) {
+    return InkWell(
+      onTap: aksi,
+      borderRadius: BorderRadius.circular(10),
+      child: Container(
+        padding: const EdgeInsets.all(10),
+        decoration: BoxDecoration(
+          color: pink ? blush : Colors.white,
+          borderRadius: BorderRadius.circular(10),
+        ),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Icon(icon, size: 17, color: burgundy),
+            const SizedBox(height: 10),
+            Text(teks,
+                style: const TextStyle(color: burgundy, fontSize: 11)),
           ],
         ),
       ),
     );
   }
 
-  Widget _banner() {
+  Widget _statistik(IconData icon, String angka, String judul) {
     return Container(
-      width: double.infinity,
-      padding: const EdgeInsets.all(22),
-      decoration: BoxDecoration(
-        gradient: const LinearGradient(
-          colors: [Color(0xFF701A32), Color(0xFF9F3450)],
-          begin: Alignment.topLeft,
-          end: Alignment.bottomRight,
-        ),
-        borderRadius: BorderRadius.circular(25),
-        boxShadow: [
-          BoxShadow(
-            color: burgundy.withValues(alpha: 0.20),
-            blurRadius: 20,
-            offset: const Offset(0, 9),
-          ),
-        ],
-      ),
-      child: Stack(
-        children: [
-          Positioned(
-            right: -12,
-            top: -15,
-            child: Icon(
-              Icons.school_rounded,
-              size: 115,
-              color: Colors.white.withValues(alpha: 0.09),
-            ),
-          ),
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Container(
-                padding: const EdgeInsets.symmetric(
-                  horizontal: 11,
-                  vertical: 6,
-                ),
-                decoration: BoxDecoration(
-                  color: Colors.white.withValues(alpha: 0.15),
-                  borderRadius: BorderRadius.circular(30),
-                ),
-                child: const Text(
-                  'DASHBOARD GURU',
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 10,
-                    fontWeight: FontWeight.w700,
-                    letterSpacing: 1.2,
-                  ),
-                ),
-              ),
-              const SizedBox(height: 19),
-              const Text(
-                'Halo, Guru! 👋',
-                style: TextStyle(
-                  color: Colors.white,
-                  fontSize: 27,
-                  fontWeight: FontWeight.w800,
-                ),
-              ),
-              const SizedBox(height: 8),
-              const Text(
-                'Kelola presensi siswa dengan lebih mudah dan teratur.',
-                style: TextStyle(
-                  color: Color(0xFFF8E8ED),
-                  fontSize: 13,
-                  height: 1.6,
-                ),
-              ),
-              const SizedBox(height: 18),
-              const Row(
-                children: [
-                  Icon(
-                    Icons.verified_user_rounded,
-                    color: Color(0xFFF2C8D5),
-                    size: 17,
-                  ),
-                  SizedBox(width: 7),
-                  Text(
-                    'PresensiKu • Manajemen Sekolah',
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 11,
-                    ),
-                  ),
-                ],
-              ),
-            ],
-          ),
-        ],
-      ),
-    );
-  }
-
-  Widget _statistik(
-    IconData icon,
-    String angka,
-    String judul,
-    Color warna,
-  ) {
-    return Container(
-      padding: const EdgeInsets.all(16),
+      padding: const EdgeInsets.all(12),
       decoration: BoxDecoration(
         color: Colors.white,
-        borderRadius: BorderRadius.circular(20),
-        border: Border.all(color: const Color(0xFFEED9DF)),
-        boxShadow: [
-          BoxShadow(
-            color: burgundy.withValues(alpha: 0.04),
-            blurRadius: 12,
-            offset: const Offset(0, 4),
-          ),
-        ],
+        borderRadius: BorderRadius.circular(14),
+        border: Border.all(color: blush),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Container(
-            padding: const EdgeInsets.all(10),
-            decoration: BoxDecoration(
-              color: blush,
-              borderRadius: BorderRadius.circular(13),
-            ),
-            child: Icon(icon, color: warna, size: 23),
-          ),
-          const SizedBox(height: 14),
-          Text(
-            angka,
-            style: TextStyle(
-              fontSize: 28,
-              height: 1,
-              fontWeight: FontWeight.w800,
-              color: warna,
-            ),
-          ),
-          const SizedBox(height: 7),
-          Text(
-            judul,
-            style: const TextStyle(
-              fontSize: 12,
-              color: mutedText,
-              fontWeight: FontWeight.w500,
-            ),
-          ),
+          Icon(icon, color: burgundy, size: 20),
+          const SizedBox(height: 8),
+          Text(angka,
+              style: const TextStyle(
+                  color: burgundy,
+                  fontSize: 20,
+                  fontWeight: FontWeight.bold)),
+          const SizedBox(height: 4),
+          Text(judul,
+              style: const TextStyle(color: mutedText, fontSize: 11)),
         ],
       ),
     );
   }
 
-  Widget _kartuPresensi() {
-    return Container(
-      padding: const EdgeInsets.all(17),
-      decoration: BoxDecoration(
-        color: const Color(0xFFF0E5EA),
-        borderRadius: BorderRadius.circular(20),
-      ),
-      child: const Row(
-        children: [
-          CircleAvatar(
-            radius: 24,
-            backgroundColor: Colors.white,
-            child: Icon(
-              Icons.fact_check_rounded,
-              color: burgundy,
-              size: 25,
-            ),
-          ),
-          SizedBox(width: 13),
-          Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  'Presensi Hari Ini',
-                  style: TextStyle(
-                    fontWeight: FontWeight.w700,
-                    fontSize: 14,
-                    color: burgundy,
-                  ),
-                ),
-                SizedBox(height: 4),
-                Text(
-                  'Buka menu presensi untuk mencatat kehadiran.',
-                  style: TextStyle(
-                    fontSize: 11,
-                    color: mutedText,
-                    height: 1.5,
-                  ),
-                ),
-              ],
-            ),
-          ),
-          Icon(
-            Icons.arrow_forward_ios_rounded,
-            size: 16,
-            color: burgundy,
-          ),
-        ],
-      ),
-    );
-  }
-
-  Widget _menu(
-    BuildContext context,
-    IconData icon,
-    String judul,
-    String deskripsi,
-    Color warna,
-    Widget halaman,
-  ) {
-    return Material(
-      color: Colors.white,
-      borderRadius: BorderRadius.circular(20),
-      child: InkWell(
-        borderRadius: BorderRadius.circular(20),
-        onTap: () => buka(context, halaman),
-        child: Container(
-          padding: const EdgeInsets.all(15),
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(20),
-            border: Border.all(color: const Color(0xFFEED9DF)),
-          ),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Container(
-                padding: const EdgeInsets.all(10),
-                decoration: BoxDecoration(
-                  color: warna.withValues(alpha: 0.10),
-                  borderRadius: BorderRadius.circular(13),
-                ),
-                child: Icon(icon, color: warna, size: 25),
-              ),
-              const Spacer(),
-              Text(
-                judul,
-                maxLines: 1,
-                overflow: TextOverflow.ellipsis,
-                style: const TextStyle(
-                  fontSize: 14,
-                  fontWeight: FontWeight.w800,
-                  color: Color(0xFF35232A),
-                ),
-              ),
-              const SizedBox(height: 4),
-              Text(
-                deskripsi,
-                maxLines: 1,
-                overflow: TextOverflow.ellipsis,
-                style: const TextStyle(
-                  fontSize: 10,
-                  color: mutedText,
-                ),
-              ),
-            ],
-          ),
+  Widget _akses(IconData icon, String teks, VoidCallback aksi) {
+    return InkWell(
+      onTap: aksi,
+      borderRadius: BorderRadius.circular(10),
+      child: Container(
+        padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 3),
+        decoration: BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.circular(10),
         ),
+        child: Column(
+          children: [
+            Icon(icon, color: burgundy, size: 21),
+            const SizedBox(height: 4),
+            Text(teks,
+                style: const TextStyle(color: burgundy, fontSize: 10)),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _nav(IconData icon, String teks, [VoidCallback? aksi]) {
+    return InkWell(
+      onTap: aksi,
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Icon(icon, color: Colors.white, size: 19),
+          const SizedBox(height: 3),
+          Text(teks,
+              style: const TextStyle(color: Colors.white, fontSize: 9)),
+        ],
       ),
     );
   }
