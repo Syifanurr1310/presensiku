@@ -42,7 +42,8 @@ class _PresensiPageState extends State<PresensiPage> {
   String tanggalText() =>
       '${tanggal.day}/${tanggal.month}/${tanggal.year}';
 
-  void simpanPresensi() {
+Future<void> simpanPresensi() async {
+
     final siswa = dataSiswa[kelasTerpilih] ?? [];
 
     final record = PresensiRecord(

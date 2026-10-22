@@ -1,3 +1,4 @@
+
 import 'package:flutter/material.dart';
 import '../app_data.dart';
 
@@ -10,8 +11,7 @@ class SiswaPage extends StatefulWidget {
   });
 
   @override
-  State<SiswaPage> createState() =>
-      _SiswaPageState();
+  State<SiswaPage> createState() => _SiswaPageState();
 }
 
 class _SiswaPageState extends State<SiswaPage> {
@@ -21,29 +21,25 @@ class _SiswaPageState extends State<SiswaPage> {
   @override
   void initState() {
     super.initState();
-    kelasTerpilih = widget.namaKelas;
+
+    // Pastikan kelas awal tersedia dalam data siswa.
+    kelasTerpilih = dataSiswa.containsKey(widget.namaKelas)
+        ? widget.namaKelas
+        : dataSiswa.keys.first;
   }
 
   @override
   Widget build(BuildContext context) {
-    final semuaSiswa =
-        dataSiswa[kelasTerpilih] ?? [];
+    final semuaSiswa = dataSiswa[kelasTerpilih] ?? [];
 
-    final daftarSiswa = semuaSiswa.where(
-      (nama) {
-        return nama
-            .toLowerCase()
-            .contains(
-              pencarian.toLowerCase(),
-            );
-      },
-    ).toList();
+    final daftarSiswa = semuaSiswa.where((nama) {
+      return nama.toLowerCase().contains(pencarian.toLowerCase());
+    }).toList();
 
     return Scaffold(
       appBar: AppBar(
         title: const Text('Daftar Siswa'),
       ),
-
       body: Column(
         children: [
           Padding(
@@ -51,19 +47,17 @@ class _SiswaPageState extends State<SiswaPage> {
             child: Column(
               children: [
                 DropdownButtonFormField<String>(
-                  value: kelasTerpilih,
+                  initialValue: kelasTerpilih,
                   decoration: const InputDecoration(
                     labelText: 'Pilih Kelas',
                     border: OutlineInputBorder(),
                   ),
-                  items: dataSiswa.keys.map(
-                    (kelas) {
-                      return DropdownMenuItem(
-                        value: kelas,
-                        child: Text(kelas),
-                      );
-                    },
-                  ).toList(),
+                  items: dataSiswa.keys.map((kelas) {
+                    return DropdownMenuItem<String>(
+                      value: kelas,
+                      child: Text(kelas),
+                    );
+                  }).toList(),
                   onChanged: (value) {
                     if (value == null) return;
 
@@ -73,9 +67,7 @@ class _SiswaPageState extends State<SiswaPage> {
                     });
                   },
                 ),
-
                 const SizedBox(height: 12),
-
                 TextField(
                   onChanged: (value) {
                     setState(() {
@@ -84,19 +76,15 @@ class _SiswaPageState extends State<SiswaPage> {
                   },
                   decoration: const InputDecoration(
                     hintText: 'Cari nama siswa...',
-                    prefixIcon:
-                        Icon(Icons.search),
+                    prefixIcon: Icon(Icons.search),
                     border: OutlineInputBorder(),
                   ),
                 ),
               ],
             ),
           ),
-
           Padding(
-            padding: const EdgeInsets.symmetric(
-              horizontal: 16,
-            ),
+            padding: const EdgeInsets.symmetric(horizontal: 16),
             child: Row(
               children: [
                 Text(
@@ -109,53 +97,43 @@ class _SiswaPageState extends State<SiswaPage> {
                 const Spacer(),
                 Text(
                   '${daftarSiswa.length} siswa',
-                  style: const TextStyle(
-                    color: Colors.grey,
-                  ),
+                  style: const TextStyle(color: Colors.grey),
                 ),
               ],
             ),
           ),
-
           const SizedBox(height: 8),
-
           Expanded(
-            child: ListView.builder(
-              padding: const EdgeInsets.symmetric(
-                horizontal: 16,
-              ),
-              itemCount: daftarSiswa.length,
-              itemBuilder: (context, index) {
-                final nama =
-                    daftarSiswa[index];
+            child: daftarSiswa.isEmpty
+                ? const Center(
+                    child: Text('Siswa tidak ditemukan.'),
+                  )
+                : ListView.builder(
+                    padding: const EdgeInsets.symmetric(horizontal: 16),
+                    itemCount: daftarSiswa.length,
+                    itemBuilder: (context, index) {
+                      final nama = daftarSiswa[index];
 
-                return Card(
-                  margin: const EdgeInsets.only(
-                    bottom: 8,
+                      return Card(
+                        margin: const EdgeInsets.only(bottom: 8),
+                        child: ListTile(
+                          leading: CircleAvatar(
+                            child: Text('${index + 1}'),
+                          ),
+                          title: Text(
+                            nama,
+                            style: const TextStyle(
+                              fontWeight: FontWeight.w500,
+                            ),
+                          ),
+                          subtitle: Text(kelasTerpilih),
+                        ),
+                      );
+                    },
                   ),
-                  child: ListTile(
-                    leading: CircleAvatar(
-                      child: Text(
-                        '${index + 1}',
-                      ),
-                    ),
-                    title: Text(
-                      nama,
-                      style: const TextStyle(
-                        fontWeight: FontWeight.w500,
-                      ),
-                    ),
-                    subtitle: Text(
-                      kelasTerpilih,
-                    ),
-                  ),
-                );
-              },
-            ),
           ),
         ],
       ),
     );
   }
 }
-
