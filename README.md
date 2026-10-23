@@ -1,17 +1,44 @@
-# flutter_application_1
 
-A new Flutter project.
+# PresensiKu
 
-## Getting Started
+Aplikasi presensi siswa berbasis Flutter untuk membantu pengelolaan data guru, siswa, kelas, jadwal pelajaran, dan kehadiran siswa.
 
-This project is a starting point for a Flutter application.
+## Fitur Aplikasi
 
-A few resources to get you started if this is your first Flutter project:
+- Login pengguna.
+- Dashboard aplikasi.
+- Pengelolaan data guru.
+- Pengelolaan data siswa dan kelas.
+- Pengelolaan jadwal pelajaran.
+- Pencatatan presensi siswa.
+- Pemilihan tanggal, kelas, dan mata pelajaran.
+- Pencatatan status kehadiran: Hadir, Izin, Sakit, dan Alpa.
+- Riwayat presensi beserta detail status siswa.
+- Filter riwayat berdasarkan tanggal dan kelas.
+- Penyimpanan data presensi secara lokal.
 
-- [Learn Flutter](https://docs.flutter.dev/get-started/learn-flutter)
-- [Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Flutter learning resources](https://docs.flutter.dev/reference/learning-resources)
+## Teknologi
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+- Flutter
+- Dart
+- SharedPreferences
+
+## Cara Menjalankan Aplikasi
+
+1. Pastikan Flutter sudah terpasang.
+2. Buka terminal pada folder proyek.
+3. Jalankan perintah:
+
+   ```bash
+   flutter pub get
+   ```
+
+4. Jalankan aplikasi di browser Chrome:
+
+   ```bash
+   flutter run -d chrome
+   ```
+
+## Pengembang
+
+Proyek PresensiKu dikembangkan sebagai aplikasi presensi siswa berbasis Flutter.
